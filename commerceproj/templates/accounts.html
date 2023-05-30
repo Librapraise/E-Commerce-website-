@@ -1,0 +1,198 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/accounts.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <title>RedStore | Ecommerce Website Design</title>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="navbar">
+          <div class="logo">
+            <a href="/"
+              ><img
+                src="{% static 'images/logo.png' %}"
+                alt="logo"
+                width="125px"
+            /></a>
+          </div>
+
+          <nav>
+            <ul id="menu-items">
+              <li><a href="/">Home</a></li>
+              
+              {% if user.is_authenticated %}
+              <li>
+                <li><a href="product">Products</a></li>
+              </li>
+              {% else %}
+              <li><a href="">About</a></li>
+              <li><a href="">Contact</a></li>
+              {% endif %}
+            </ul>
+          </nav>
+
+          <a href="cart"
+            ><img src="{% static 'images/cart.png' %}" alt="cart" height="30px"
+          /></a>
+          <img src="{% static 'images/menu.png' %}" alt="" height="28px" class="menu-icon" onclick="menuToggle()">
+        </div>
+
+        <div class="account-page">
+          <div class="row">
+            <div class="col-2">
+              <img src="{% static 'images/image1.png' %}" alt="shooter" />
+            </div>
+
+            <div class="col-2">
+              <div class="form-container">
+                <div class="form-btn">
+                  <span onclick="login()">Login</span>
+                  <span onclick="register()">Register</span>
+                  <hr id="indicator" />
+                </div>
+
+                {% for message in messages %}
+                <h3 style="color: #ff523b">{{message}}</h3>
+                {% endfor %}
+                <form action="login" method="POST" id="login">
+                  {% csrf_token %}
+                  <input type="text" name="username" placeholder="username" />
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder="password"
+                  />
+                  <button type="submit" class="btn">Login</button>
+                  <a href="#">Forgot password?</a>
+                </form>
+
+                {% for message in messages %}
+                <h3 style="color: #ff523b">{{message}}</h3>
+                {% endfor %}
+                <form action="register" method="POST" id="register">
+                  {% csrf_token %}
+                  <input type="text" name="username" placeholder="username" />
+                  <input type="email" name="email" placeholder="email" />
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder="password"
+                  />
+                  <input
+                    type="password"
+                    name="password2"
+                    placeholder="Confirm password"
+                  />
+                  <button type="submit" class="btn">Register</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <footer>
+      <div class="container">
+          <div class="row">
+              <div class="footer-col-1">
+                  <h3>Download Our App</h3>
+                  <p>Download for Android and ios mobile phone</p>
+
+                  <div class="app-logo">
+                      <img src="{% static 'images/play-store.png' %}">
+                      <img src="{% static 'images/app-store.png' %}">
+                  </div>
+              </div>
+              <div class="footer-col-2">
+                  <img src="{% static 'images/logo-white.png' %}">
+                  <p>Our Purpose Is To Sustainably Make the Pleaseure and Benefits of Sports Accessible to the Many</p>
+              </div>
+              <div class="footer-col-3">
+                  <h3>Useful Links</h3>
+                  <ul>
+                      <li>Coupons</li>
+                      <li>Blog Post</li>
+                      <li>Return Policy</li>
+                      <li>Join Affliate</li>
+                  </ul>
+              </div>
+              <div class="footer-col-4">
+                  <h3>Follow Us</h3>
+                  <ul>
+                      <li>Facebook</li>
+                      <li>Twitter</li>
+                      <li>Instagram</li>
+                      <li>Youtube</li>
+                  </ul>
+              </div>
+          </div>
+          
+      <hr>
+      <p class="copyright">Copyright 2023 - Libra Dev</p>
+      </div>
+
+      
+  </footer>
+
+    <div class="footer-arrow" id="footer-arrow">
+      <img src="{% static 'arrow.png' %}" />
+    </div>
+
+    <!------js for toggle menu------>
+
+    <script>
+      const menuItems = document.getElementById("menu-items");
+
+      menuItems.style.maxHeight = "0px";
+
+      function menuToggle() {
+        if (menuItems.style.maxHeight == "0px") {
+          menuItems.style.maxHeight = "200px";
+        } else {
+          menuItems.style.maxHeight = "0px";
+        }
+      }
+
+      const arrowUp = document.getElementById("footer-arrow");
+
+      arrowUp.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "smooth",
+        });
+      });
+    </script>
+
+    <!------js for toggle menu------>
+
+    <script>
+      const LoginForm = document.getElementById("login");
+      const RegForm = document.getElementById("register");
+      const Indicator = document.getElementById("indicator");
+
+      function login() {
+        LoginForm.style.left = "0";
+        RegForm.style.left = "300px";
+        Indicator.style.transform = "translateX(0)";
+      }
+
+      function register() {
+        LoginForm.style.left = "-300px";
+        RegForm.style.left = "0";
+        Indicator.style.transform = "translateX(100px)";
+      }
+    </script>
+  </body>
+</html>
